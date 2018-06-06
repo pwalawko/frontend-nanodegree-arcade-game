@@ -1,23 +1,23 @@
 // Enemies our player must avoid
-var Enemy = function(x, y, speed) {
+var Enemy = function(x) {
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
 
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
-    this.x = -10;//x;
-    this.y = y;
-    this.speed = speed;
+    this.x = x;
+    this.y = [60, 145, 227][Math.floor(Math.random()*3)];
+    this.speed = Math.floor((Math.random() * 200) + 50);
     this.sprite = 'images/enemy-bug.png';
 };
 
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
 Enemy.prototype.update = function(dt) {
-    // console.log(dt)
     this.x += this.speed*dt;;
     if(this.x > 505){
-        this.x = -10;
+        this.x = -120;
+        this.y = [60, 145, 227][Math.floor(Math.random()*3)];
         this.speed = Math.floor((Math.random() * 200) + 50);
     }
     // You should multiply any movement by the dt parameter
@@ -41,7 +41,8 @@ var Player = function() {
 
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
-    this.sprite = 'images/enemy-bug.png';
+    this.resetPlayer();
+    this.sprite = 'images/char-boy.png';
 };
 
 // Update the enemy's position, required method for game
@@ -52,12 +53,33 @@ Player.prototype.update = function(dt) {
     // all computers.
 };
 
+Player.prototype.resetPlayer = function() {
+    this.x = 202;
+    this.y = 403;    
+};
+
 // Draw the enemy on the screen, required method for game
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
 Player.prototype.handleInput = function(direction) {
+    switch(true) {
+        case (direction=='up' && this.y>0):
+            this.y -= 83;
+            if (this.y == -12) {
+                this.resetPlayer();
+            }
+            break;
+        case (direction=='down' && this.y<403):
+            this.y += 83;
+            break;
+        case (direction=='left' && this.x>0):
+            this.x -= 101;
+            break;
+        case (direction=='right' && this.x<404):
+            this.x += 101;
+    }
 };
 
 
@@ -66,7 +88,7 @@ Player.prototype.handleInput = function(direction) {
 // Place the player object in a variable called player
 
 
-var allEnemies = [new Enemy(80, 60,100), new Enemy(80, 145, 200)];
+var allEnemies = [new Enemy(-200), new Enemy(-160), new Enemy(-120)];
 var player = new Player();
 
 
