@@ -6,7 +6,7 @@ var Enemy = function(x) {
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.x = x;
-    this.y = [60, 145, 227][Math.floor(Math.random()*3)];
+    this.y = [62, 145, 228][Math.floor(Math.random()*3)];
     this.speed = Math.floor((Math.random() * 200) + 50);
     this.sprite = 'images/enemy-bug.png';
 };
@@ -17,8 +17,11 @@ Enemy.prototype.update = function(dt) {
     this.x += this.speed*dt;;
     if(this.x > 505){
         this.x = -120;
-        this.y = [60, 145, 227][Math.floor(Math.random()*3)];
+        this.y = [62, 145, 228][Math.floor(Math.random()*3)];
         this.speed = Math.floor((Math.random() * 200) + 50);
+    }
+    if((this.x-75<player.x && this.x+75>player.x) && (this.y===player.y && this.y===player.y)) {
+        player.resetPlayer()
     }
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
@@ -55,7 +58,7 @@ Player.prototype.update = function(dt) {
 
 Player.prototype.resetPlayer = function() {
     this.x = 202;
-    this.y = 403;    
+    this.y = 394;
 };
 
 // Draw the enemy on the screen, required method for game
@@ -65,19 +68,19 @@ Player.prototype.render = function() {
 
 Player.prototype.handleInput = function(direction) {
     switch(true) {
-        case (direction=='up' && this.y>0):
+        case (direction==='up' && this.y>0):
             this.y -= 83;
-            if (this.y == -12) {
+            if (this.y === -21) {
                 this.resetPlayer();
             }
             break;
-        case (direction=='down' && this.y<403):
+        case (direction==='down' && this.y<403):
             this.y += 83;
             break;
-        case (direction=='left' && this.x>0):
+        case (direction==='left' && this.x>0):
             this.x -= 101;
             break;
-        case (direction=='right' && this.x<404):
+        case (direction==='right' && this.x<404):
             this.x += 101;
     }
 };
