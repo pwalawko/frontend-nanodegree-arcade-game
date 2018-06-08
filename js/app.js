@@ -1,3 +1,27 @@
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', onLoad, false)
+} else {
+    onLoad()
+}
+
+function onLoad () {
+    modal = document.querySelector('#endModal')
+    playAgainButton = document.querySelector('#play-again-btn');
+    playAgainButton.addEventListener('click', playAgain);
+}
+
+function gameEnd() {
+    modal.style.display = 'block';
+    const finalScore = document.querySelector('#final-scores');
+    finalScore.textContent = `The bugs bitted you ${player.bug_bites} time(s)!`;
+}
+
+function playAgain() {
+    modal.style.display = 'none';
+    player.bug_bites = 0;
+    restartGame();
+}
+
 // Enemies our player must avoid
 var Enemy = function(x) {
     this.x = x;
@@ -15,7 +39,8 @@ Enemy.prototype.update = function(dt) {
         this.speed = Math.floor((Math.random() * 200) + 50);
     }
     if((this.x-75<player.x && this.x+75>player.x) && (this.y===player.y && this.y===player.y)) {
-        player.resetPlayer()
+        player.resetPlayer();
+        player.bug_bites += 1;
     }
 };
 
@@ -32,6 +57,7 @@ Enemy.prototype.render = function() {
 var Player = function() {
     this.resetPlayer();
     this.sprite = 'images/char-boy.png';
+    this.bug_bites = 0;
 };
 
 Player.prototype.update = function(dt) {
@@ -55,6 +81,7 @@ Player.prototype.handleInput = function(direction) {
             this.y -= 83;
             if (this.y === -21) {
                 this.resetPlayer();
+                gameEnd();
             }
             break;
         case (direction==='down' && this.y<394):
