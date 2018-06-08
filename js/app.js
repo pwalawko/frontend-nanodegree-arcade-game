@@ -19,7 +19,6 @@ function gameEnd() {
 function playAgain() {
     modal.style.display = 'none';
     player.bug_bites = 0;
-    restartGame();
 }
 
 // Enemies our player must avoid

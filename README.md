@@ -8,7 +8,7 @@ In this game you have a Player and Enemies (Bugs). The goal of the player is to 
 
 ## Where to play
 
-You can try your memory [here](https://pwalawko.github.io/frontend-nanodegree-arcade-game/).
+You can try your skills [here](https://pwalawko.github.io/frontend-nanodegree-arcade-game/).
 
 ## Code Dependencies
 
