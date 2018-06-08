@@ -1,11 +1,11 @@
 if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', onLoad, false)
+    document.addEventListener('DOMContentLoaded', onLoad, false);
 } else {
-    onLoad()
+    onLoad();
 }
 
-function onLoad () {
-    modal = document.querySelector('#endModal')
+function onLoad() {
+    modal = document.querySelector('#endModal');
     playAgainButton = document.querySelector('#play-again-btn');
     playAgainButton.addEventListener('click', playAgain);
 }
@@ -24,20 +24,24 @@ function playAgain() {
 // Enemies our player must avoid
 var Enemy = function(x) {
     this.x = x;
-    this.y = [62, 145, 228][Math.floor(Math.random()*3)];
-    this.speed = Math.floor((Math.random() * 200) + 50);
+    this.y = [62, 145, 228][Math.floor(Math.random() * 3)];
+    this.speed = Math.floor(Math.random() * 200 + 50);
     this.sprite = 'images/enemy-bug.png';
 };
 
 // Update the enemy's position
 Enemy.prototype.update = function(dt) {
-    this.x += this.speed*dt;;
-    if(this.x > 505){
+    this.x += this.speed * dt;
+    if (this.x > 505) {
         this.x = -120;
-        this.y = [62, 145, 228][Math.floor(Math.random()*3)];
-        this.speed = Math.floor((Math.random() * 200) + 50);
+        this.y = [62, 145, 228][Math.floor(Math.random() * 3)];
+        this.speed = Math.floor(Math.random() * 200 + 50);
     }
-    if((this.x-75<player.x && this.x+75>player.x) && (this.y===player.y && this.y===player.y)) {
+    if (
+        this.x - 75 < player.x &&
+        this.x + 75 > player.x &&
+        (this.y === player.y && this.y === player.y)
+    ) {
         player.resetPlayer();
         player.bug_bites += 1;
     }
@@ -55,8 +59,7 @@ var Player = function() {
     this.bug_bites = 0;
 };
 
-Player.prototype.update = function(dt) {
-};
+Player.prototype.update = function(dt) {};
 
 // Move the player to the initial position
 Player.prototype.resetPlayer = function() {
@@ -71,21 +74,21 @@ Player.prototype.render = function() {
 
 // Handle keys pressed by the player
 Player.prototype.handleInput = function(direction) {
-    switch(true) {
-        case (direction==='up' && this.y>0):
+    switch (true) {
+        case direction === 'up' && this.y > 0:
             this.y -= 83;
             if (this.y === -21) {
                 this.resetPlayer();
                 gameEnd();
             }
             break;
-        case (direction==='down' && this.y<394):
+        case direction === 'down' && this.y < 394:
             this.y += 83;
             break;
-        case (direction==='left' && this.x>0):
+        case direction === 'left' && this.x > 0:
             this.x -= 101;
             break;
-        case (direction==='right' && this.x<404):
+        case direction === 'right' && this.x < 404:
             this.x += 101;
     }
 };
