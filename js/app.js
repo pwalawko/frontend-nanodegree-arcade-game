@@ -1,18 +1,12 @@
 // Enemies our player must avoid
 var Enemy = function(x) {
-    // Variables applied to each of our instances go here,
-    // we've provided one for you to get started
-
-    // The image/sprite for our enemies, this uses
-    // a helper we've provided to easily load images
     this.x = x;
     this.y = [62, 145, 228][Math.floor(Math.random()*3)];
     this.speed = Math.floor((Math.random() * 200) + 50);
     this.sprite = 'images/enemy-bug.png';
 };
 
-// Update the enemy's position, required method for game
-// Parameter: dt, a time delta between ticks
+// Update the enemy's position
 Enemy.prototype.update = function(dt) {
     this.x += this.speed*dt;;
     if(this.x > 505){
@@ -23,12 +17,9 @@ Enemy.prototype.update = function(dt) {
     if((this.x-75<player.x && this.x+75>player.x) && (this.y===player.y && this.y===player.y)) {
         player.resetPlayer()
     }
-    // You should multiply any movement by the dt parameter
-    // which will ensure the game runs at the same speed for
-    // all computers.
 };
 
-// Draw the enemy on the screen, required method for game
+// Draw the enemy on the screen
 Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
@@ -37,35 +28,27 @@ Enemy.prototype.render = function() {
 // This class requires an update(), render() and
 // a handleInput() method.
 
-
+// The character controlled by the player
 var Player = function() {
-    // Variables applied to each of our instances go here,
-    // we've provided one for you to get started
-
-    // The image/sprite for our enemies, this uses
-    // a helper we've provided to easily load images
     this.resetPlayer();
     this.sprite = 'images/char-boy.png';
 };
 
-// Update the enemy's position, required method for game
-// Parameter: dt, a time delta between ticks
 Player.prototype.update = function(dt) {
-    // You should multiply any movement by the dt parameter
-    // which will ensure the game runs at the same speed for
-    // all computers.
 };
 
+// Move the player to the initial position
 Player.prototype.resetPlayer = function() {
     this.x = 202;
     this.y = 394;
 };
 
-// Draw the enemy on the screen, required method for game
+// Draw the player on the screen
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
+// Handle keys pressed by the player
 Player.prototype.handleInput = function(direction) {
     switch(true) {
         case (direction==='up' && this.y>0):
@@ -74,7 +57,7 @@ Player.prototype.handleInput = function(direction) {
                 this.resetPlayer();
             }
             break;
-        case (direction==='down' && this.y<403):
+        case (direction==='down' && this.y<394):
             this.y += 83;
             break;
         case (direction==='left' && this.x>0):
@@ -85,18 +68,11 @@ Player.prototype.handleInput = function(direction) {
     }
 };
 
-
-// Now instantiate your objects.
-// Place all enemy objects in an array called allEnemies
-// Place the player object in a variable called player
-
-
 var allEnemies = [new Enemy(-200), new Enemy(-160), new Enemy(-120)];
 var player = new Player();
 
-
-// This listens for key presses and sends the keys to your
-// Player.handleInput() method. You don't need to modify this.
+// This listens for key presses and sends the keys to the
+// Player.handleInput() method.
 document.addEventListener('keyup', function(e) {
     var allowedKeys = {
         37: 'left',
