@@ -32,11 +32,13 @@ var Enemy = function(x) {
 // Update the enemy's position
 Enemy.prototype.update = function(dt) {
     this.x += this.speed * dt;
+    // Let the bugs run again when they go off the board
     if (this.x > 505) {
         this.x = -120;
         this.y = [62, 145, 228][Math.floor(Math.random() * 3)];
         this.speed = Math.floor(Math.random() * 200 + 50);
     }
+    // Collision with player
     if (
         this.x - 75 < player.x &&
         this.x + 75 > player.x &&
